@@ -6,12 +6,13 @@ public class Asset {
 
     public static BufferedImage dirt, water, grass, rock, fire, ice;
     public static BufferedImage[] player_down, player_up, player_left, player_right;
-    public static BufferedImage[] enemy1, enemy2,enemy3,enemy4,enemyship;
-    public static BufferedImage[] playbutton, helpbutton, exitbutton;
+    public static BufferedImage[] enemy1, enemy2, enemy3, enemy4, enemyship;
+    public static BufferedImage[] playbutton, helpbutton, exitbutton, resetbutton;
     private static final int width = 200, height = 200;
 
     public static void intit() {
         SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/texture/sheet.png"));
+        SpriteSheet button = new SpriteSheet(ImageLoader.loadImage("/texture/button.png"));
 
         dirt = sheet.crop(0, 0, width, height);
         water = sheet.crop(width, 0, width, height);
@@ -19,19 +20,23 @@ public class Asset {
         rock = sheet.crop(width * 3, 0, width, height);
         fire = sheet.crop(width * 4, 0, width, height);
         ice = sheet.crop(width * 5, 0, width, height);
-
+/////////////
         playbutton = new BufferedImage[2];
-        playbutton[0] = sheet.crop(0, height, width * 2, height);
-        playbutton[1] = sheet.crop(0, height * 2, width * 2, height);
+        playbutton[0] = button.crop(0, 0, width * 2, height);
+        playbutton[1] = button.crop(0, height, width * 2, height);
 
         helpbutton = new BufferedImage[2];
-        helpbutton[0] = sheet.crop(width * 2, height, width * 2, height);
-        helpbutton[1] = sheet.crop(width * 2, height * 2, width * 2, height);
+        helpbutton[0] = button.crop(width * 2, 0, width * 2, height);
+        helpbutton[1] = button.crop(width * 2, height, width * 2, height);
 
         exitbutton = new BufferedImage[2];
-        exitbutton[0] = sheet.crop(width * 4, height, width * 2, height);
-        exitbutton[1] = sheet.crop(width * 4, height * 2, width * 2, height);
+        exitbutton[0] = button.crop(width * 4, 0, width * 2, height);
+        exitbutton[1] = button.crop(width * 4, height, width * 2, height);
 
+        resetbutton = new BufferedImage[2];
+        resetbutton[0] = button.crop(0, height * 2, width * 2, height);
+        resetbutton[1] = button.crop(0, height * 3, width * 2, height);
+////////////        
         player_down = new BufferedImage[2];
         player_down[0] = sheet.crop(0, height * 3, width, height);
         player_down[1] = sheet.crop(width, height * 3, width, height);
@@ -58,7 +63,7 @@ public class Asset {
 
         enemy3 = new BufferedImage[2];
         enemy3[0] = sheet.crop(0, height * 5, width, height);
-        enemy3[1] = sheet.crop(width , height * 5, width, height);
+        enemy3[1] = sheet.crop(width, height * 5, width, height);
 
         enemy4 = new BufferedImage[2];
         enemy4[0] = sheet.crop(width * 2, height * 5, width, height);

@@ -20,7 +20,7 @@ public class Potion extends Entity {
     public void tick() {
         count++;
         if (count == 150) {
-            active = false; //Đạn biến mất sau 1 time    
+            active = false; 
         }
         
         Entity e = checkEntityCollisions(0f, 0f);
@@ -28,7 +28,7 @@ public class Potion extends Entity {
             PlayerTroop player = (PlayerTroop) e;
             if (player.getHealth() + 100 <= player.getMaxhealth()) {
                 player.setHealth(player.getHealth() + 100);
-            }
+            } else player.setHealth(player.getMaxhealth());
             this.setActive(false);
         }
         

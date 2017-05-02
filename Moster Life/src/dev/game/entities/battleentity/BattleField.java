@@ -29,10 +29,10 @@ public class BattleField extends Entity {
     public void tick() {
         count++;
         if (count % 150 == 0) {
-            entitymanager.addEntity(new Coin(handler, r.nextFloat() * handler.getHeight(), r.nextFloat() * handler.getHeight(), ID.Coin));
+            entitymanager.addEntity(new Coin(handler, r.nextFloat() * (handler.getHeight() - 40), r.nextFloat() * (handler.getHeight() - 40), ID.Coin));
         }
         if (count % 350 == 0) {
-            entitymanager.addEntity(new Potion(handler, r.nextFloat() * (handler.getHeight() - 20), r.nextFloat() * (handler.getHeight() - 20), ID.Potion));
+            entitymanager.addEntity(new Potion(handler, r.nextFloat() * (handler.getHeight() - 40), r.nextFloat() * (handler.getHeight() - 40), ID.Potion));
         }
     }
 

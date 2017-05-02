@@ -10,6 +10,8 @@ import dev.game.entities.bullet.PlayerBullet;
 import dev.game.entities.ship.PlayerShip;
 import dev.game.gfx.Animation;
 import dev.game.gfx.Asset;
+import dev.game.state.EndState;
+import dev.game.state.State;
 import dev.game.utils.Utils;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -18,6 +20,7 @@ public class PlayerTroop extends CombatTroop {
 
     private int count = 0;
     private final float pe;
+    private long lastAttack, attackCooldown = 500, attackTimer = attackCooldown;
     private Animation aniplayer;
     PlayerShip player;
 
@@ -33,19 +36,23 @@ public class PlayerTroop extends CombatTroop {
         pe = 200.0f / maxhealth;
     }
 
-    @Override
     public void tick() {
         aniplayer.tick();
-        count++;
         x = Utils.clamp(0, 600, handler.getMouseManager().getMouseX() - 20);
         y = Utils.clamp(0, 600, handler.getMouseManager().getMouseY());
 
-        if (handler.getMouseManager().isLeftPressed() == true && count % 10 == 0) {
-            entitymanager.addEntity(new PlayerBullet(entitymanager, handler, x + width / 2, y - 10, ID.PlayerBullet, atk, speed));
+        if (handler.getMouseManager().isLeftPressed() == true) {
+            attackTimer += System.currentTimeMillis() - lastAttack;
+            lastAttack = System.currentTimeMillis();
+            if (attackTimer > attackCooldown) {
+                entitymanager.addEntity(new PlayerBullet(entitymanager, handler, x + width / 2, y - 10, ID.PlayerBullet, atk, speed));
+                attackTimer = 0;
+            }
         }
 
         Entity e = checkEntityCollisions(0f, 0f);
-        if (e != null && (e.getID() == ID.EnemyBullet || e.getID() == ID.EnemyTroop || e.getID() == ID.SmartEnemyBullet)) {
+        if (e != null
+                && (e.getID() == ID.EnemyBullet || e.getID() == ID.EnemyTroop || e.getID() == ID.SmartEnemyBullet)) {
             if (e.getID() == ID.EnemyBullet) {
                 EnemyBullet bullet = (EnemyBullet) e;
                 hurt((int) (bullet.getAtk() * def));
@@ -85,5 +92,7 @@ public class PlayerTroop extends CombatTroop {
         for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
             e.setActive(false);
         }
+        handler.getGame().endState = new EndState(handler);
+        State.setState(handler.getGame().endState);
     }
 }

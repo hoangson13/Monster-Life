@@ -6,6 +6,7 @@ import dev.game.gfx.Asset;
 import dev.game.gfx.GameCamera;
 import dev.game.input.KeyManager;
 import dev.game.input.MouseManager;
+import dev.game.state.EndState;
 import dev.game.state.GameState;
 import dev.game.state.MenuState;
 import dev.game.state.State;
@@ -27,7 +28,7 @@ public class Game implements Runnable {
     //STATE
     public State gameState;
     public State menuState;
-
+    public State endState;
     //INPUT
     private KeyManager keymanager;
     private MouseManager mousemanager;
@@ -48,8 +49,6 @@ public class Game implements Runnable {
     //Khởi tạo
 
     private void init() {
-        display = new Display(title, width, height);
-
         keymanager = new KeyManager();
         display.getFrame().addKeyListener(keymanager);
         mousemanager = new MouseManager();
@@ -65,7 +64,6 @@ public class Game implements Runnable {
         entitymanager = new EntityManager(handler);
         gameState = new GameState(handler, entitymanager);
         menuState = new MenuState(handler);
-
         State.setState(menuState);
     }
     //Tick là thay đổi liên quan tới chuyển động
@@ -99,7 +97,7 @@ public class Game implements Runnable {
     }
 
     public void run() { //Game loop
-
+        display = new Display(title, width, height);
         init();
         int fps = 60;
         double timePerTick = 1000000000 / fps;
@@ -150,6 +148,10 @@ public class Game implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public void reset() {
+        init();
     }
 //SETTER AND GETTER
 
