@@ -1,13 +1,6 @@
-In class Game add:    public State endState;
-In class MenuState remove from exitbutton: handler.getMouseManager().setUIManager(null);
-PlayerTroop method die:
-    @Override
-    public void die() {
-        for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
-            e.setActive(false);
-        }
-        handler.getGame().endState = new EndState(handler);
-        State.setState(handler.getGame().endState);
-    }
-Add EndState
-Update res
+Update res ( imagine and world.txt )
+add class in Tile paacket
+update tile.java
+update item.java
+update world.java
+update Asset.java

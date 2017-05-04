@@ -5,11 +5,11 @@ import java.awt.image.BufferedImage;
 
 public class Asset {
 
-    public static BufferedImage goldChest;
     public static BufferedImage inventoryScreen;
     public static Font font36;
+    public static BufferedImage coin, potion, defenceUp, speedUp, healthUp, attackUp;
 
-    public static BufferedImage dirt, water, grass, rock, fire, ice;
+    public static BufferedImage star1, star2, star3, metroid1, metroid2, wall;
     public static BufferedImage[] player_down, player_up, player_left, player_right;
     public static BufferedImage[] enemy1, enemy2, enemy3, enemy4, enemyship;
     public static BufferedImage[] playbutton, helpbutton, exitbutton, resetbutton;
@@ -22,14 +22,19 @@ public class Asset {
         inventoryScreen = ImageLoader.loadImage("/texture/inventoryScreen.png");
         font36 = FontLoader.loadFont("res/fonts/slkscr.ttf", 36);
 
-        goldChest = sheet.crop(0, height + 5, width, height);
+        coin = sheet.crop(0, height, width, height);
+        potion = sheet.crop(width, height, width, height);
+        defenceUp = sheet.crop(width * 2, height, width, height);
+        speedUp = sheet.crop(width * 3, height, width, height);
+        healthUp = sheet.crop(width * 4, height, width, height);
+        attackUp = sheet.crop(width * 5, height, width, height);
 
-        dirt = sheet.crop(0, 0, width, height);
-        water = sheet.crop(width, 0, width, height);
-        grass = sheet.crop(width * 2, 0, width, height);
-        rock = sheet.crop(width * 3, 0, width, height);
-        fire = sheet.crop(width * 4, 0, width, height);
-        ice = sheet.crop(width * 5, 0, width, height);
+        star1 = sheet.crop(0, 0, width, height);
+        star2 = sheet.crop(width, 0, width, height);
+        star3 = sheet.crop(width * 2, 0, width, height);
+        metroid1 = sheet.crop(width * 3, 0, width, height);
+        metroid2 = sheet.crop(width * 4, 0, width, height);
+        wall = sheet.crop(width * 5, 0, width, height);
         /////////////
         playbutton = new BufferedImage[2];
         playbutton[0] = button.crop(0, 0, width * 2, height);

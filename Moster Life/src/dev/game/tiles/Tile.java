@@ -7,10 +7,12 @@ public class Tile {
 
     //Khởi tạo tile
     public static Tile[] tiles = new Tile[36];
-    public static Tile grassTile = new GrassTile(0);
-    public static Tile dirtTile = new DirtTile(1);
-    public static Tile rockTile = new RockTile(2);
-    public static Tile waterTile = new WaterTile(3);
+    public static Tile star1Tile = new Star1Tile(0);
+    public static Tile star2Tile = new Star2Tile(1);
+    public static Tile star3Tile = new Star3Tile(2);
+    public static Tile metroid1Tile = new Metroid1Tile(3);
+    public static Tile metroid2Tile = new Metroid2Tile(4);
+    public static Tile wallTile = new WallTile(5);
     //CLASS
 
     public static final int TILEWIDTH = 40, TILEHEIGHT = 40;

@@ -52,8 +52,7 @@ public class World {
 
         for (int y = yStart; y < yEnd; y++) {
             for (int x = xStart; x < xEnd; x++) {
-                getTile(x, y).render(g, (int) (x * Tile.TILEWIDTH - handler.getGameCamera().getxOffset()),
-                        (int) (y * Tile.TILEHEIGHT - handler.getGameCamera().getyOffset()));
+                getTile(x, y).render(g, (int) (x * Tile.TILEWIDTH - handler.getGameCamera().getxOffset()), (int) (y * Tile.TILEHEIGHT - handler.getGameCamera().getyOffset()));
             }
         }
         itemManager.render(g);
@@ -64,7 +63,7 @@ public class World {
     public Tile getTile(int x, int y) {
         Tile t = Tile.tiles[tiles[x][y]];
         if (t == null) {
-            return Tile.dirtTile;
+            return Tile.star1Tile;
         }
         return t;
     }
@@ -101,11 +100,12 @@ public class World {
         }
     }
 //Load from another text file maybe
+
     private void loadItem() {
-        itemManager.addItem(Item.goldChest.createNew(40, 40));
-        itemManager.addItem(Item.goldChest2.createNew(120, 40));
-        itemManager.addItem(Item.goldChest3.createNew(200, 40));
-        itemManager.addItem(Item.goldChest3.createNew(280, 40));
+        itemManager.addItem(Item.attackUp.createNew(40, 40));
+        itemManager.addItem(Item.defenceUp.createNew(120, 40));
+        itemManager.addItem(Item.healthUp.createNew(200, 40));
+        itemManager.addItem(Item.speedUp.createNew(280, 40));
     }
 
     public EntityManager getEntityManager() {

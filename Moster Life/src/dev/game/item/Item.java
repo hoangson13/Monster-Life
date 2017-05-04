@@ -13,10 +13,11 @@ import dev.game.gfx.Asset;
 public class Item {
 
     public static Item[] items = new Item[256];
-    public static Item goldChest = new Item(Asset.goldChest, "Gold Chest", 0);
-    public static Item goldChest2 = new Item(Asset.goldChest, "Gold Chest2", 1);
-    public static Item goldChest3 = new Item(Asset.goldChest, "Gold Chest3", 2);
-
+    public static Item attackUp = new Item(Asset.attackUp, "attackUp", 0);
+    public static Item defenceUp = new Item(Asset.defenceUp, "defenceUp", 1);
+    public static Item healthUp = new Item(Asset.healthUp, "healthUp", 2);
+    public static Item speedUp = new Item(Asset.speedUp, "speedUp", 3);
+    
     public static final int ITEMWIDTH = 40, ITEMHEIGHT = 40;
     protected Handler handler;
     protected BufferedImage texture;
