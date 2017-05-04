@@ -18,11 +18,10 @@ import java.awt.Graphics;
 
 public class PlayerTroop extends CombatTroop {
 
-    private int count = 0;
     private final float pe;
-    private long lastAttack, attackCooldown = 500, attackTimer = attackCooldown;
     private Animation aniplayer;
     PlayerShip player;
+    private long lastAttack, attackCooldown = 500, attackTimer = attackCooldown;
 
     public PlayerTroop(PlayerShip player, EntityManager entitymanager, Handler handler, float x, float y, ID id) {
         super(entitymanager, handler, x, y, id);
@@ -36,6 +35,7 @@ public class PlayerTroop extends CombatTroop {
         pe = 200.0f / maxhealth;
     }
 
+    @Override
     public void tick() {
         aniplayer.tick();
         x = Utils.clamp(0, 600, handler.getMouseManager().getMouseX() - 20);
@@ -73,7 +73,7 @@ public class PlayerTroop extends CombatTroop {
     @Override
     public void render(Graphics g) {
         g.drawImage(aniplayer.getCurrentFrame(), (int) x, (int) y, width, height, null);
-        //Player health bar        
+        // Player health bar
         g.setColor(Color.decode("#FF304F"));
         g.fillRect(650, 320, 200, 20);
         g.setColor(Color.black);
@@ -89,10 +89,12 @@ public class PlayerTroop extends CombatTroop {
 
     @Override
     public void die() {
+
         for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
             e.setActive(false);
         }
         handler.getGame().endState = new EndState(handler);
         State.setState(handler.getGame().endState);
+
     }
 }

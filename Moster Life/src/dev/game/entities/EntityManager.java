@@ -4,69 +4,77 @@ import dev.game.Handler;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 
 public class EntityManager {
 
-    private Handler handler;
-    private ArrayList<Entity> entities;
-    private Comparator<Entity> renderSorter = new Comparator<Entity>(){
+	private Handler handler;
+	private ArrayList<Entity> entities;
+	private Comparator<Entity> renderSorter = new Comparator<Entity>() {
 
 		@Override
 		public int compare(Entity a, Entity b) {
-			if(a.getID() ==  ID.Menu &&(b.getID() ==ID.PlayerTroop || b.getID() ==ID.EnemyTroop))
+			if (a.getID() == ID.Menu && (b.getID() == ID.PlayerTroop || b.getID() == ID.EnemyTroop))
 				return -1;
 			return 1;
 		}
-    	
-    };
 
-    public EntityManager(Handler handler) {
-        this.handler = handler;
-        entities = new ArrayList<Entity>();
-    }
+	};
 
-    public EntityManager() {
-    }
+	public EntityManager(Handler handler) {
+		this.handler = handler;
+		entities = new ArrayList<Entity>();
+	}
 
-    public void tick() {
-        for (int i = 0; i < entities.size(); i++) {
-            Entity e = entities.get(i);
-            e.tick();
-            if (e.getActive() == false) {
-                entities.remove(e);
-            }
-        }
-        entities.sort(renderSorter);
-    }
+	public EntityManager() {
+	}
 
-    public void render(Graphics g) {
-        entities.forEach((Entity e) -> {
-            e.render(g);
-        });
-    }
+	public void tick() {
+		for (int i = 0; i < entities.size(); i++) {
+			Entity e = entities.get(i);
+			e.tick();
+			if (e.getActive() == false) {
+				entities.remove(e);
+			}
+		}
+		entities.sort(renderSorter);
+	}
 
-    public void addEntity(Entity e) {
-        entities.add(e);
-    }
+	/*
+	 * public void tick() { Iterator<Entity> it = entities.iterator(); while
+	 * (it.hasNext()) {
+	 * 
+	 * Entity e = it.next(); e.tick(); if (!e.getActive()) { it.remove(); } }
+	 * entities.sort(renderSorter); }
+	 */
+	public void render(Graphics g) {
+		entities.forEach((Entity e) -> {
+			e.render(g);
+		});
+	}
 
-    public void removeEntity(Entity e) {
-        entities.remove(e);
-    }
-    //GETTERS SETTERS
+	public void addEntity(Entity e) {
+		entities.add(e);
+	}
 
-    public Handler getHandler() {
-        return handler;
-    }
+	public void removeEntity(Entity e) {
+		entities.remove(e);
+	}
+	// GETTERS SETTERS
 
-    public void setHandler(Handler handler) {
-        this.handler = handler;
-    }
+	public Handler getHandler() {
+		return handler;
+	}
 
-    public ArrayList<Entity> getEntities() {
-        return entities;
-    }
+	public void setHandler(Handler handler) {
+		this.handler = handler;
+	}
 
-    public void setEntities(ArrayList<Entity> entities) {
-        this.entities = entities;
-    }
+	public ArrayList<Entity> getEntities() {
+		return entities;
+	}
+
+	public void setEntities(ArrayList<Entity> entities) {
+		this.entities = entities;
+	}
 }

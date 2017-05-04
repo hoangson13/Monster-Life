@@ -8,6 +8,8 @@ import dev.game.entities.battleentity.BattleField;
 import dev.game.entities.combattroop.PlayerTroop;
 import dev.game.gfx.Animation;
 import dev.game.gfx.Asset;
+import dev.game.inventory.Inventory;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -15,7 +17,8 @@ public class PlayerShip extends Ship {
 
     private Animation animDown, animUp, animLeft, animRight;
     private EntityManager entitymanager;
-    private PlayerTroop troop;																// fix
+    private PlayerTroop troop;
+    private Inventory inventory;
 
     public PlayerShip(EntityManager entitymanager, Handler handler, float x, float y, ID id) {
         super(entitymanager, handler, x, y, Ship.DEFAULT_CREATURE_WIDTH, Ship.DEFAULT_CREATURE_HEIGHT, id);
@@ -37,17 +40,27 @@ public class PlayerShip extends Ship {
         animUp = new Animation(500, Asset.player_up);
         animLeft = new Animation(500, Asset.player_left);
         animRight = new Animation(500, Asset.player_right);
+        
+        inventory = new Inventory(handler);
     }
 
     @Override
     public void tick() {
+    	inventory.tick();
+    	
+    	if (inventory.isActive())
+    		return;
+    	
         animDown.tick();
         animUp.tick();
         animRight.tick();
         animLeft.tick();
+        
         getInput();
         move();
         handler.getGameCamera().centerOnEntity(this);
+        
+        
 
         Entity e = checkEntityCollisions(0f, 0f);
         if (e != null && e.getID() == ID.Enemy) {
@@ -60,6 +73,10 @@ public class PlayerShip extends Ship {
     private void getInput() {
         xMove = 0;
         yMove = 0;
+        
+        if(inventory.isActive())
+        	return;
+        
         if (handler.getKeyManager().up) {
             yMove = -speed;
         }
@@ -78,6 +95,11 @@ public class PlayerShip extends Ship {
     public void render(Graphics g) {
         g.drawImage(getCurrentAnimationFrame(), (int) (x - handler.getGameCamera().getxOffset()),
                 (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+        
+    }
+    
+    public void postRender(Graphics g){
+    	inventory.render(g);
     }
 
     private BufferedImage getCurrentAnimationFrame() {
@@ -95,4 +117,14 @@ public class PlayerShip extends Ship {
     @Override
     public void die() {
     }
+
+	public Inventory getInventory() {
+		return inventory;
+	}
+
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
+	}
+    
+    
 }

@@ -1,8 +1,13 @@
 package dev.game.gfx;
 
+import java.awt.Font;
 import java.awt.image.BufferedImage;
 
 public class Asset {
+
+    public static BufferedImage goldChest;
+    public static BufferedImage inventoryScreen;
+    public static Font font36;
 
     public static BufferedImage dirt, water, grass, rock, fire, ice;
     public static BufferedImage[] player_down, player_up, player_left, player_right;
@@ -14,13 +19,18 @@ public class Asset {
         SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/texture/sheet.png"));
         SpriteSheet button = new SpriteSheet(ImageLoader.loadImage("/texture/button.png"));
 
+        inventoryScreen = ImageLoader.loadImage("/texture/inventoryScreen.png");
+        font36 = FontLoader.loadFont("res/fonts/slkscr.ttf", 36);
+
+        goldChest = sheet.crop(0, height + 5, width, height);
+
         dirt = sheet.crop(0, 0, width, height);
         water = sheet.crop(width, 0, width, height);
         grass = sheet.crop(width * 2, 0, width, height);
         rock = sheet.crop(width * 3, 0, width, height);
         fire = sheet.crop(width * 4, 0, width, height);
         ice = sheet.crop(width * 5, 0, width, height);
-/////////////
+        /////////////
         playbutton = new BufferedImage[2];
         playbutton[0] = button.crop(0, 0, width * 2, height);
         playbutton[1] = button.crop(0, height, width * 2, height);
@@ -36,7 +46,7 @@ public class Asset {
         resetbutton = new BufferedImage[2];
         resetbutton[0] = button.crop(0, height * 2, width * 2, height);
         resetbutton[1] = button.crop(0, height * 3, width * 2, height);
-////////////        
+        ////////////
         player_down = new BufferedImage[2];
         player_down[0] = sheet.crop(0, height * 3, width, height);
         player_down[1] = sheet.crop(width, height * 3, width, height);

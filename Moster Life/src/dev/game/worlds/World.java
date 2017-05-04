@@ -5,6 +5,8 @@ import dev.game.entities.EntityManager;
 import dev.game.entities.ID;
 import dev.game.entities.ship.EnemyShip;
 import dev.game.entities.ship.PlayerShip;
+import dev.game.item.Item;
+import dev.game.item.ItemManager;
 import dev.game.tiles.Tile;
 import dev.game.utils.Utils;
 import java.awt.Graphics;
@@ -19,20 +21,26 @@ public class World {
     private int spawnY;
     private int numMonster;
     private int[][] MonIndex;
+    private PlayerShip playership;
+
+    private ItemManager itemManager;
 
     public World(Handler handler, String path, EntityManager entitymanager) {
 
         this.handler = handler;
         this.entitymanager = entitymanager;
+        itemManager = new ItemManager(handler);
         loadWorld(path);
-        PlayerShip playership = new PlayerShip(entitymanager, handler, spawnX, spawnY, ID.Player);
+        playership = new PlayerShip(entitymanager, handler, spawnX, spawnY, ID.Player);
         entitymanager.addEntity(playership);
         for (int MonNumber = 0; MonNumber < numMonster; MonNumber++) {
             entitymanager.addEntity(new EnemyShip(MonIndex, MonNumber, entitymanager, handler, 0, 0, ID.Enemy));
         }
+        loadItem();
     }
 
     public void tick() {
+        itemManager.tick();
         entitymanager.tick();
     }
 
@@ -48,7 +56,9 @@ public class World {
                         (int) (y * Tile.TILEHEIGHT - handler.getGameCamera().getyOffset()));
             }
         }
+        itemManager.render(g);
         entitymanager.render(g);
+        playership.postRender(g);
     }
 
     public Tile getTile(int x, int y) {
@@ -60,8 +70,8 @@ public class World {
     }
 
     private void loadWorld(String path) {
-        String file = Utils.loadFileAsString(path); 
-        String[] tokens = file.split("\\s+"); 
+        String file = Utils.loadFileAsString(path);
+        String[] tokens = file.split("\\s+");
 
         width = Utils.parseInt(tokens[0]);
         height = Utils.parseInt(tokens[1]);
@@ -83,13 +93,19 @@ public class World {
             MonIndex[i][9] = Utils.parseInt(tokens[14 + i * 10]);
         }
 
-
         tiles = new int[width][height];
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                tiles[x][y] = Utils.parseInt(tokens[(x + y * width) + 5 + numMonster * 10]); 
+                tiles[x][y] = Utils.parseInt(tokens[(x + y * width) + 5 + numMonster * 10]);
             }
         }
+    }
+//Load from another text file maybe
+    private void loadItem() {
+        itemManager.addItem(Item.goldChest.createNew(40, 40));
+        itemManager.addItem(Item.goldChest2.createNew(120, 40));
+        itemManager.addItem(Item.goldChest3.createNew(200, 40));
+        itemManager.addItem(Item.goldChest3.createNew(280, 40));
     }
 
     public EntityManager getEntityManager() {
@@ -103,4 +119,21 @@ public class World {
     public int getHeight() {
         return height;
     }
+
+    public Handler getHandler() {
+        return handler;
+    }
+
+    public void setHandler(Handler handler) {
+        this.handler = handler;
+    }
+
+    public ItemManager getItemManager() {
+        return itemManager;
+    }
+
+    public void setItemManager(ItemManager itemManager) {
+        this.itemManager = itemManager;
+    }
+
 }

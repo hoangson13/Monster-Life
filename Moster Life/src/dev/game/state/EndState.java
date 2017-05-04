@@ -6,8 +6,11 @@ import dev.game.UI.UIImageButton;
 import dev.game.UI.UIManager;
 import dev.game.gfx.Asset;
 import dev.game.gfx.ImageLoader;
+import dev.game.gfx.SpriteSheet;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+
 
 public class EndState extends State {
 

@@ -6,7 +6,6 @@ import dev.game.gfx.Asset;
 import dev.game.gfx.GameCamera;
 import dev.game.input.KeyManager;
 import dev.game.input.MouseManager;
-import dev.game.state.EndState;
 import dev.game.state.GameState;
 import dev.game.state.MenuState;
 import dev.game.state.State;
@@ -29,6 +28,7 @@ public class Game implements Runnable {
     public State gameState;
     public State menuState;
     public State endState;
+
     //INPUT
     private KeyManager keymanager;
     private MouseManager mousemanager;
@@ -64,6 +64,7 @@ public class Game implements Runnable {
         entitymanager = new EntityManager(handler);
         gameState = new GameState(handler, entitymanager);
         menuState = new MenuState(handler);
+
         State.setState(menuState);
     }
     //Tick là thay đổi liên quan tới chuyển động
@@ -128,6 +129,10 @@ public class Game implements Runnable {
         }
         stop();
     }
+    
+    public void reset() {
+        init();
+    }
 
     public synchronized void start() {
         if (running) {
@@ -148,10 +153,6 @@ public class Game implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    public void reset() {
-        init();
     }
 //SETTER AND GETTER
 

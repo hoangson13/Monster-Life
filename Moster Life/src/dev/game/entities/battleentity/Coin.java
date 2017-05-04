@@ -3,7 +3,6 @@ package dev.game.entities.battleentity;
 import dev.game.Handler;
 import dev.game.entities.Entity;
 import dev.game.entities.ID;
-import dev.game.entities.combattroop.PlayerTroop;
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -20,13 +19,11 @@ public class Coin extends Entity {
     public void tick() {
         count++;
         if (count == 150) {
-            active = false; //Đạn biến mất sau 1 time    
+            active = false; 
         }
 
         Entity e = checkEntityCollisions(0f, 0f);
         if (e != null && e.getID() == ID.PlayerTroop) {
-            PlayerTroop player = (PlayerTroop) e;
-
             this.setActive(false);
         }
     }
