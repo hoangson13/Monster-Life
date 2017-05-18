@@ -4,22 +4,26 @@ import dev.game.Handler;
 import dev.game.entities.Entity;
 import dev.game.entities.ID;
 import dev.game.entities.combattroop.PlayerTroop;
-import java.awt.Color;
+import dev.game.gfx.Asset;
 import java.awt.Graphics;
+import java.util.Random;
 
 public class Potion extends Entity {
     
-    private int count = 0;
-    public static final int DEFAULT_POTION_WIDTH = 20, DEFAULT_POTION_HEIGHT = 20;
+    private int count = 0, timeAppear;
+    private Random r;
+    public static final int DEFAULT_POTION_WIDTH = 30, DEFAULT_POTION_HEIGHT = 30;
     
     public Potion(Handler handler, float x, float y, ID id) {
         super(handler, x, y, DEFAULT_POTION_WIDTH, DEFAULT_POTION_HEIGHT, id);
+        r = new Random();
+		timeAppear= 61 + r.nextInt(120);
     }
     
     @Override
     public void tick() {
         count++;
-        if (count == 150) {
+        if (count >=timeAppear) {
             active = false; 
         }
         
@@ -36,8 +40,7 @@ public class Potion extends Entity {
     
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.decode("#FA7E0A"));
-        g.fillOval((int) x, (int) y, width, height);
+    	g.drawImage(Asset.potion1, (int) x, (int) y, DEFAULT_POTION_WIDTH, DEFAULT_POTION_HEIGHT, null);
     }
     
     @Override
